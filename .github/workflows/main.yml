@@ -1,0 +1,23 @@
+name: Update Log.md
+
+on:
+  push:
+    branches:
+      - main  # Ganti dengan nama branch utama repositorimu, jika berbeda
+
+jobs:
+  update-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update log.md
+        run: |
+          echo "## $(date)" >> log.md
+          echo "Changes: $GITHUB_SHA" >> log.md
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add log.md
+          git commit -m "Update log.md with new commit"
+          git push origin main
